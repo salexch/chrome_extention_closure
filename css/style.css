@@ -5,10 +5,13 @@
 
 	#google_closure_extention .loading {
 		background: url(chrome-extension://__MSG_@@extension_id__/images/loading.gif) center center no-repeat transparent;
+		background-color: #AC9393;
+		opacity: 0.6;		
+		display:none;
 		position: absolute;
+		top: 0;
 		width: 97%;
-		height: 230px;
-		top: 30px;		
+		height: 90%;
 	}
 
 	#google_closure_extention header {

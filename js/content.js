@@ -3,16 +3,32 @@ var CLOSURE_URL = 'http://closure-compiler.appspot.com';
 
 console.log(TITLE + ' Loaded');
 
+var SETTINGS = {
+	minify_html: true,
+	show_full_url: false,
+	popup_dimensions: {
+		width: 720,
+		height: 800
+	}
+}	
+
 var get_scripts = [];
 var streams_holder = [];
 var parallel = 1
 var status = 0;
 var location_href_regexp = new RegExp(location.href);
 var start_time = 0;
+var randoms = [312, 12, 32, 65, 76];
+var randomizer = Math.floor((Math.random() * (randoms.length - 1) ));
 
 var container = $('<div />', {
 	id: 'google_closure_extention' 
 });
+
+var loading_elem = $('<div />', {
+	'class': 'loading'
+});
+
 
 var closure_post_params = {
 	js_code: '',
@@ -20,7 +36,7 @@ var closure_post_params = {
 	output_format: 'json',
 	output_info: 'compiled_code',
 	warning_level:'DEFAULT',
-	output_file_name: 'test.js'
+	output_file_name: _.uniqueId('compiled_') + Math.floor( ( Math.random()*randomizer ) + 1 )  + '.js'
 };
 
 var closure_get_params = ['statistics', 'errors', 'warnings'];
@@ -232,6 +248,8 @@ var ContentView = Backbone.View.extend({
 			selected: 0
 		});
 		this.$el.find('.stats').html(html);
+		
+		this.$el.append(loading_elem);
 	}	
 });
 
@@ -259,29 +277,34 @@ $('script').each(function() {
 	var src = $(this).attr('src');
 	var type = $(this).attr('type')
 	
-	if (src && src.match(/\.js/)) {
+	var condition1 = (src && src.match(/\.js/));
+	var condition2 = (!type || type.match(/text\/javascript/));
+	
+	if (condition1 || condition2) {
 		var id = _.uniqueId('index_');
-		
-		var script_obj = {
-			id: id,
-			src_full: src
-		};		
-		
-		get_scripts.push(script_obj);
-		
-	} else if (!type || type.match(/text\/javascript/)) {
-		var text = $(this).html();
-		var script_obj = {
-			id: _.uniqueId('index_'),
-			src: text.replace(/(\s)|(\n\r)|(\n)|(\r)/, '').substring(0, 15),
-			checked: false,
-			text: text
-		};	
-		
-	}
 
-	if ((src && src.match(/\.js/)) || (!type || type.match(/text\/javascript/)))	
+		if (condition1) {
+			
+			var script_obj = {
+				id: id,
+				src_full: src
+			};		
+			
+			get_scripts.push(script_obj);
+			
+		} else  {
+			var text = $(this).html();
+			
+			var script_obj = {
+				id: id,
+				src: text.replace(/(\s*)|(\n\r)|(\n)|(\r)/, '').substring(0, 15),
+				checked: false,
+				text: text
+			};	
+		}
+
 		Scripts.add(script_obj);
+	}
 });
 
 
@@ -300,7 +323,7 @@ var collectSources = function() {
 		}
 		
 		stream = stream.pipe( function() {
-			console.log("Parallel " + (index + 1) + ". Making request for [" + script.src_full + "]");
+			//console.log("Parallel " + (index + 1) + ". Making request for [" + script.src_full + "]");
 			return runRequest(script);
 		});		
 	});
@@ -340,7 +363,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 var openPopup = function() {
 
 	$('body').append(container);
-
 	
 	var masterView = new ContentView({
 		el: container
@@ -363,7 +385,7 @@ var openPopup = function() {
 				
 				var params = $.extend({}, closure_post_params, {js_code: scripts_text});
 				
-				container.find('.page.main').append($('<div />', {'class': 'loading'}));
+				loading_elem.show();
 				
 				$.ajax({
 					url: CLOSURE_URL+ '/compile' + closure_get_string,
@@ -377,7 +399,8 @@ var openPopup = function() {
 					success: function(data, textStatus, jqXHR) {
 						try {
 							masterView.addResult(data);
-							masterView.showPage('result');					
+							masterView.showPage('result');	
+							loading_elem.hide();		
 						} catch(e) {}
 
 					}

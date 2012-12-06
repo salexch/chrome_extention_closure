@@ -66,18 +66,16 @@ var ResultPageView = Backbone.View.extend({
 		var that = this;
 		var curr_url = location.hash;
 		
-		var iframe = $('<iframe />');
-		
 		$.ajax({
 			url: curr_url,
 			type: 'GET',
 			dataType: 'html',
-			context: iframe[0],
 			complete: function(jqXHR, textStatus) {
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 			},
 			success: function(data, textStatus, jqXHR) {
+				
 				var pattern = /<script(\s+(\w+\s*=\s*("|').*?\3)\s*)*\s*(\/>|>.*?<\/script\s*>)/ig; //one row
 				var pattern2 = /<script\s*>[^<]*<\/script>/ig;
  
@@ -90,39 +88,24 @@ var ResultPageView = Backbone.View.extend({
 				that.$el.find('.res-nav-html xmp').text(no_scripts);
 			}
 		});	
-		
-		/*
-		var html = $('html').clone();
 
-		var scripts = html.find('script');
-		var type1 = scripts.filter('[src]');
-		var type2 = scripts.filter(':not([src])').filter(':not([type])');
-		var type3 = scripts.filter(':not([src])').filter('[type="text/javascript"]');
-		
-		type1.remove();
-		type2.remove();
-		type3.remove();
-
-		//remove self	
-		html.find('#google_closure_extention').remove();
-		
-		html.find('body').append('<script src="' + js_url + '"></script>');
-
-		return html.html();*/
 	},
 	
 	add: function(data) {
 		
+		var error_status = ('undefined' == typeof data.errors);
+		var warning_status = ('undefined' == typeof data.errors);
+		
 		var fetch_obj = {
-			errors_number: ('undefined' == typeof data.errors) ? 0 : data.errors.length,
-			errors_title: ('undefined' == typeof data.errors) ? '' : '(' + data.errors.length + ')',
-			errors_heading: ('undefined' == typeof data.errors) ? 'No errors' :  'Number of errors ' + data.errors.length,
-			errors_issues: ('undefined' == typeof data.errors) ? '' : data.errors,
-			warnings_number: ('undefined' == typeof data.errors) ? 0 : data.errors.length,
-			warnings_title: ('undefined' == typeof data.errors) ? '' : '( ' + data.errors.length + ')',
-			warnings_heading: ('undefined' == typeof data.errors) ? 'No warnings' : 'Number of warnings ' + data.errors.length,
-			warnings_issues: ('undefined' == typeof data.errors) ? '' : data.errors,
-			compilation_status: '<span class="' + (('undefined' == typeof data.errors) ? 'green">Compilation was a success!' : 'red">Compilation did not complete successfully. See errors pane for details.') + '</span>',
+			errors_number: (error_status) ? 0 : data.errors.length,
+			errors_title: (error_status) ? '' : '(' + data.errors.length + ')',
+			errors_heading: (error_status) ? 'No errors' :  'Number of errors ' + data.errors.length,
+			errors_issues: (error_status) ? '' : data.errors,
+			warnings_number: (warning_status) ? 0 : data.errors.length,
+			warnings_title: (warning_status) ? '' : '( ' + data.errors.length + ')',
+			warnings_heading: (warning_status) ? 'No warnings' : 'Number of warnings ' + data.errors.length,
+			warnings_issues: (warning_status) ? '' : data.errors,
+			compilation_status: '<span class="' + ((error_status) ? 'green">Compilation was a success!' : 'red">Compilation did not complete successfully. See errors pane for details.') + '</span>',
 			original_size: data.statistics.originalSize,
 			original_size_gz: data.statistics.originalGzipSize,
 			compiled_size: data.statistics.compressedSize,
