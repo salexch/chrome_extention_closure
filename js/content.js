@@ -1,4 +1,4 @@
-var TITLE = 'Google Closure Compiler';
+var TITLE = 'Closure Compiler';
 var CLOSURE_URL = 'http://closure-compiler.appspot.com';
 
 console.log(TITLE + ' Loaded');
