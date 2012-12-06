@@ -1,0 +1,128 @@
+#google_closure_extention {
+	direction: ltr;
+	text-align: left;
+}
+
+	#google_closure_extention .loading {
+		background: url(chrome-extension://__MSG_@@extension_id__/images/loading.gif) center center no-repeat transparent;
+		position: absolute;
+		width: 97%;
+		height: 230px;
+		top: 30px;		
+	}
+
+	#google_closure_extention header {
+		height: auto;
+		width: 100%;
+		padding: 0;
+		border-bottom: 1px solid gray;
+	}
+	
+	#google_closure_extention header .button {
+		float: right;
+		margin-right: 5px;
+		text-decoration: none;
+	}
+	
+	#google_closure_extention  header .button.close {
+		
+	}
+
+	#google_closure_extention section {
+		clear: both;
+	}
+	
+	#google_closure_extention section .stats{
+		border-top: 1px solid gray;
+		margin-top: 5px;
+	}
+	
+	#google_closure_extention .list {
+	}
+
+		#google_closure_extention ul{
+			margin:0;
+			padding:0;
+			list-style: none;
+		}	
+	
+		#google_closure_extention ul.scripts-list {
+			overflow-x: hidden;
+			overflow-y: scroll;
+			height: 230px;
+		}
+		
+		#google_closure_extention ul li.selected{
+			background: #C6DBD7;
+			color:#000;
+		}
+	
+	#google_closure_extention ul label {
+		text-overflow:ellipsis;
+	}
+
+	#google_closure_extention .ui-dialog-buttonset {
+		direction: ltr;
+		text-align: left;		
+	}
+	
+	#google_closure_extention .options,
+	#google_closure_extention .result {
+		display:none;
+	}
+	
+	#google_closure_extention .page.options tr td:first-child {
+		width: 192px;
+		text-align: top;
+	}
+
+	#google_closure_extention .page.result .result-nav {
+		padding:0;
+		margin:0;
+	}	
+	
+	#google_closure_extention .page.result .result-nav li {
+		background: #DDD;
+		border:1px solid #B8B8B8;
+		cursor: pointer;
+		float:left;
+	}
+
+	#google_closure_extention .page.result .result-nav li:hover {
+		background: #EEE;
+	}	
+	
+	#google_closure_extention .page.result .result-nav li.selected {
+		background: white;
+	}
+	
+	#google_closure_extention .page.result .result-nav-content {
+		clear:both;
+	}
+
+	#google_closure_extention .page.result .result-nav-content li{
+		border: 1px solid #B8B8B8;
+		overflow-y:scroll;
+		overflow-x: hidden;
+		max-height: 500px;
+	}
+	
+	#google_closure_extention .page.result .result-nav-content li:not(:first-child) {
+		display: none;
+	}
+	
+	.red {
+		color: #A00;
+	}
+	
+	.red_bg {
+		background: #A00;
+	}
+	
+	.green {
+		color: #109618;
+	}
+	
+	.green_bg {
+		background: #109618;
+	}	
