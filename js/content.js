@@ -351,7 +351,7 @@ var openPopup = function() {
 	container.dialog({
 		minWidth: 720,
 		maxHeight: 800,
-		title: '<a href="' + CLOSURE_URL + '">' + TITLE + '</a>',
+		title: '<a href="' + CLOSURE_URL + '" target="_blank">' + TITLE + '</a>',
 		modal: true,
 		buttons: {
 			'Compile': function(e) {
