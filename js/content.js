@@ -360,68 +360,75 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 });
 
+
+var getCompile = function() {
+	var scripts_text = '';
+	var selected = Scripts.getSelected();
+	$.each(selected, function() {
+		scripts_text += '\n' + this.get('text');
+	});
+	
+	var params = $.extend({}, closure_post_params, {js_code: scripts_text});
+	
+	loading_elem.show();
+
+	$.ajax({
+		url: CLOSURE_URL+ '/compile' + closure_get_string,
+		type: 'POST',
+		data: params,
+		dataType: 'json',
+		complete: function(jqXHR, textStatus) {
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		},
+		success: function(data, textStatus, jqXHR) {
+			try {
+				openPopup.masterView.addResult(data);
+				openPopup.masterView.showPage('result');	
+				loading_elem.hide();		
+			} catch(e) {}
+		}
+	});	
+}
+
+
 var openPopup = function() {
 
-	$('body').append(container);
+	if (!openPopup.opened) {
+		openPopup.opened = true;
+		$('body').append(container);
 	
-	var masterView = new ContentView({
-		el: container
-	});
-	
-	Scripts.trigger('load');
-	
-	container.dialog({
-		minWidth: 720,
-		maxHeight: 800,
-		title: '<a href="' + CLOSURE_URL + '" target="_blank">' + TITLE + '</a>',
-		modal: true,
-		buttons: {
-			'Compile': function(e) {
-				var scripts_text = '';
-				var selected = Scripts.getSelected();
-				$.each(selected, function() {
-					scripts_text += '\n' + this.get('text');
+		container.dialog({
+			minWidth: 720,
+			maxHeight: 800,
+			title: '<a href="' + CLOSURE_URL + '" target="_blank">' + TITLE + '</a>',
+			modal: true,
+			create: function( event, ui ) {
+				openPopup.masterView = new ContentView({
+					el: container
 				});
 				
-				var params = $.extend({}, closure_post_params, {js_code: scripts_text});
-				
-				loading_elem.show();
-				
-				$.ajax({
-					url: CLOSURE_URL+ '/compile' + closure_get_string,
-					type: 'POST',
-					data: params,
-					dataType: 'json',
-					complete: function(jqXHR, textStatus) {
-					},
-					error: function(jqXHR, textStatus, errorThrown) {
-					},
-					success: function(data, textStatus, jqXHR) {
-						try {
-							masterView.addResult(data);
-							masterView.showPage('result');	
-							loading_elem.hide();		
-						} catch(e) {}
-
-					}
-				});			
+				Scripts.trigger('load');			
 			},
-			'Options': function(e) {
-				var page = 'options';
-				
-				$(e.currentTarget).find('span').text(page);
-				
-				if (masterView.showPage().is('.' + page)) 
-					page = 'main';
-				else
-					$(e.currentTarget).find('span').text('main');
-				
-				masterView.showPage(page);
-				
+			buttons: {
+				'Compile': getCompile,
+				'Options': function(e) {
+					var page = 'options';
+					
+					$(e.currentTarget).find('span').text(page);
+					
+					if (openPopup.masterView.showPage().is('.' + page)) 
+						page = 'main';
+					else
+						$(e.currentTarget).find('span').text('main');
+					
+					openPopup.masterView.showPage(page);
+				}
 			}
-		}
-	});
-
+		});
+		
+	} else 
+		container.dialog( "open" );
 	
 }
 
