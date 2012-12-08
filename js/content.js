@@ -401,7 +401,7 @@ var openPopup = function() {
 		container.dialog({
 			minWidth: 720,
 			maxHeight: 800,
-			title: '<a href="' + CLOSURE_URL + '" target="_blank">' + TITLE + '</a>',
+			title: TITLE + ' <a class="poweredby" href="' + CLOSURE_URL + '" target="_blank">powered by Google Closure</a>',
 			modal: true,
 			create: function( event, ui ) {
 				openPopup.masterView = new ContentView({
