@@ -75,31 +75,28 @@ var ResultPageView = Backbone.View.extend({
 			error: function(jqXHR, textStatus, errorThrown) {
 			},
 			success: function(data, textStatus, jqXHR) {
-				var pattern = /<script(\s+(\w+\s*=\s*("|').*?\3)\s*)*\s*(\/>|>.*?<\/script\s*>)/ig; //one row
-				var pattern2 = /<script\s*>[^<]*<\/script>/ig;
- 
-				var no_scripts = data.replace(pattern, '');
-				no_scripts = no_scripts.replace(pattern2, '');
-				
-				var pat3 = /<\/body>/ig;
-				no_scripts = no_scripts.replace(pat3, '<script src="' + js_url + '"><\/script></body>');
-				
-				that.$el.find('.res-nav-html xmp').text(no_scripts);			
-				/*
 				var selected = Scripts.getSelected();
 				$.each(selected, function() {
 					if (this.get('src_full')) 
 						var regexp = '<script.*' + this.get('src') + '[^<]*<\/script>';
-					else 
-						var regexp = '<script>' + this.get('text') + '<\/script>';
-					
+					else {
+						var replace = [/\$/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig]
+						var replacer = ['\\$', '\\s+', '\\r', '\\n', '\\t'];
+						
+						var regexp = '<script>' + this.get('text');
+						
+						for(var i = 0;i < replace.length ;i++) 
+							regexp = regexp.replace(replace[i], replacer[i]);
+							
+						regexp += '[^<]*<\/script>';
+					}
 					var pattern =  new RegExp(regexp, 'ig');
 					data = data.replace(pattern, '');
 				});				
 				
 				var pat3 = /<\/body>/ig;
 				data = data.replace(pat3, '<script src="' + js_url + '"><\/script>\n</body>');
-				that.$el.find('.res-nav-html xmp').text(data);*/
+				that.$el.find('.res-nav-html xmp').text(data);
 			}
 		});	
 
