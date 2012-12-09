@@ -122,7 +122,7 @@ var ResultPageView = Backbone.View.extend({
 				var pat3 = /<\/body>/ig;
 				
 				if (selected_js.length) {
-					if (!SETTINGS.compiled_js_inject_inline) {
+					if (!SETTINGS.js_inject_inline) {
 						var js_url = CLOSURE_URL + that.data.outputFilePath;
 						data = data.replace(pat3, '<script src="' + js_url + '"><\/script>\n</body>');
 					} else 
@@ -130,7 +130,7 @@ var ResultPageView = Backbone.View.extend({
 				}
 
 				if (selected_css.length) {
-					if (SETTINGS.compiled_css_inject_inline) {
+					if (SETTINGS.css_inject_inline) {
 						data = data.replace(pat3, '<style>' + this.data.css + '<\/style>\n</body>');
 					} 
 				}

@@ -88,6 +88,14 @@
 	#google_closure_extention .result {
 		display:none;
 	}
+
+	#google_closure_extention .page.options table {
+		width: 100%;
+	}
+	
+	#google_closure_extention .page.options tr th {
+		text-align: center;
+	}
 	
 	#google_closure_extention .page.options tr td:first-child {
 		width: 192px;

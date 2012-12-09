@@ -51,7 +51,9 @@
 	"css/eggplant/images/ui-bg_highlight-soft_45_5f5964_1x100.png"
   ],  
   "permissions": [
-    "tabs"
+    "tabs",
+	"https://*/*",
+	"http://*/*"	
   ],  
   "options_page": "html/options.html",
   "manifest_version": 2

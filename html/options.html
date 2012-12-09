@@ -1,89 +1,16 @@
 <html>
 <head><title>Options</title></head>
 <link type="text/css" rel="stylesheet" href="../css/options.css" />
-<script type="text/javascript">
-	var default_settings = {
-		Closure: {
-			options: {
-				compilation_level: 'WHITESPACE_ONLY',
-				output_format: 'json',
-				output_info: 'compiled_code',
-				warning_level:'DEFAULT'			
-			},
-			visual_options: {
-				show_local_relative_path: true
-			}
-		},
-		Html: {
-			minify: false,
-			insert_css_inline: false,
-			insert_js_inline: false
-		},
-		Css: {
-			visual_options: {
-				show_local_relative_path: true
-			}
-		}
-	}
+<script src="../js/modules/jquery.min.js"></script>
+<script src="../js/modules/mustache.js"></script>
+<script src="../js/pages/options.js"></script>
+<script src="options.js"></script>
 
-
-	functionn restore_options() {
-		var settings = localStorage['close_compiler'];
-		if (!settings) 
-			settings = $.extend({}, default_settings);
-		/*
-		var select = document.getElementById("color");
-		for (var i = 0; i < select.children.length; i++) {
-			var child = select.children[i];
-			if (child.value == favorite) {
-				child.selected = "true";
-				break;
-			}
-		}*/	
-	}
-
-</script>
-<body onload="restore_options()">
-	<!--
-	<div class="box">
-		<b>Global Options</b> 	
-		<fieldset>
-			<legend>Closure</legend>	
-			<div style="float:left;width: 200px;margin-left: 10px;">
-				<label>Closure Url</label><input value="" />
-			</div>
-		</fieldset>	
-		<fieldset>
-			<legend>Css</legend>	
-			<div style="float:left;width: 200px;margin-left: 10px;">
-			</div>
-		</fieldset>	
-		<fieldset>
-			<legend>Html</legend>	
-			<div style="float:left;width: 200px;margin-left: 10px;">
-			</div>
-		</fieldset>	
-	</div>	
-
-	<div class="box">
-		<b>Visual</b> 	
-		<fieldset>
-			<legend>Dimensions</legend>	
-			<div style="float:left;width: 200px;margin-left: 10px;">
-			</div>
-		</fieldset>	
-		<fieldset>
-			<legend>Design</legend>	
-			<div style="float:left;width: 200px;margin-left: 10px;">
-			</div>
-		</fieldset>	
-	</div>	
-	-->
+<body>
 	
 	This is an alpha version.<br/>
 	
 	Visit on <a href="https://github.com/salexch/chrome_extention_closure" />Github</a> (Based on <a target="_blank" href="http://closure-compiler.appspot.com">google closure</a>)
-		
 		
 </body>
 </html>

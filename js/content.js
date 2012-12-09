@@ -5,8 +5,8 @@ console.log(TITLE + ' Loaded');
 
 var SETTINGS = {
 	minify_html: false,
-	compiled_css_inject_inline: false,
-	compiled_js_inject_inline: false,
+	css_inject_inline: false,
+	js_inject_inline: false,
 	show_full_url: false,
 	popup_dimensions: {
 		width: 720,
@@ -14,6 +14,7 @@ var SETTINGS = {
 	}
 }	
 
+var global_options = {};
 
 var parallel = 1
 var status = 0;
@@ -101,17 +102,7 @@ var ContentView = Backbone.View.extend({
 		
 		Styles.trigger('load');
 
-		
-		/* draw options  */
-		$.each(options_data.Options, function() {
-			$.each(this.list, function() {
-				if (this.value == closure_post_params[this.name]) {
-					this.checked = true;
-					return false;
-				}
-			});
-		});
-		this.$el.find('.page.options').append(Mustache.to_html(options_template, options_data));		
+		this.$el.find('.page.options').append(Mustache.to_html(options_template, global_options));		
 		
 		this.$el.append(loading_elem);
 	},
@@ -127,7 +118,7 @@ var ContentView = Backbone.View.extend({
 	setOptions: function(e) {
 		var that = this;
 		var temp = {};
-		this.$el.find('.options input').each(function() {
+		this.$el.find('.options table:first input').each(function() {
 			var elem = $(this);
 			var key = elem.attr('name');
 			var value = elem.val();
@@ -143,9 +134,25 @@ var ContentView = Backbone.View.extend({
 			that.$el.find('.' + value)[display_func]();
 		}); 
 		
-		
-		
 		$.extend(closure_post_params, temp);
+		
+		this.$el.find('.options table:last input').each(function() {
+			var elem = $(this);
+			var key = elem.attr('name');
+			var value = elem.val();
+
+			
+			if (elem.is(':checked')) {
+				if (key == 'js_inject_inline')
+					SETTINGS.key = (value == 'ije') ? false : true;
+				else
+					SETTINGS.key = true;
+			} else  {
+				if (key != 'js_inject_inline')
+					SETTINGS.key = false;
+			}		
+		}); 		
+		
 	},	
 	
 	addResult: function(data) {
@@ -166,6 +173,8 @@ var ContentView = Backbone.View.extend({
 });
 
 
+
+
 $(document).ready(function() {
 	Scripts.getCurrDocScripts();
 	Styles.getCurrDocScripts();
@@ -174,7 +183,10 @@ $(document).ready(function() {
 
 var sendMessage = function(msg_obj) {
 	chrome.extension.sendMessage(msg_obj, function(response) {
-	  console.log(response);
+		if (response.background && response.settings)	{
+			global_options = response.settings;
+		}	
+		//console.log(response);
 	});
 }
 
@@ -182,9 +194,12 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request.background && request.openPopup)	{
 		openPopup();
 	}
-
 });
 
+
+sendMessage({
+	getSettings: true
+});
 
 var getCompile = function() {
 	loading_elem.show();
@@ -206,39 +221,6 @@ var getCompile = function() {
 		openPopup.masterView.showPage('result');	
 		loading_elem.hide();		
 	});
-
-	/*
-	var scripts_text = '';
-	var selected = Scripts.getSelected();
-	
-	if (!selected.length)
-		return false;
-	
-	$.each(selected, function() {
-		scripts_text += '\n' + this.get('text');
-	});
-	
-	var params = $.extend({}, closure_post_params, {js_code: scripts_text});
-	
-	loading_elem.show();
-
-	$.ajax({
-		url: CLOSURE_URL+ '/compile' + closure_get_string,
-		type: 'POST',
-		data: params,
-		dataType: 'json',
-		complete: function(jqXHR, textStatus) {
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-		},
-		success: function(data, textStatus, jqXHR) {
-			try {
-				openPopup.masterView.addResult(data);
-				openPopup.masterView.showPage('result');	
-				loading_elem.hide();		
-			} catch(e) {}
-		}
-	});	*/
 }
 
 

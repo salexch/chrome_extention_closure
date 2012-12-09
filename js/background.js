@@ -40,6 +40,11 @@ var sendMessage = function(tab_id, msg_obj) {
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if (!sender.tab)
 		return ;
-		
-		
+	
+	if (request && request.getSettings)	{
+		sendResponse({
+			background: true,
+			settings: JSON.parse(localStorage['closure_compiler'])
+		});
+	}
 });
