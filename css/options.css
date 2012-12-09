@@ -1,0 +1,23 @@
+.box {
+	padding: 6px;
+	margin-bottom: 10px;
+	background-color: #F6F6F6;
+	color: #505050;
+	line-height: 1.5em;
+	border: 1px solid #E4E4E4;	
+}
+
+.box fieldset {
+	border: 1px solid #E4E4E4; 
+	margin: 0;
+	border-image: initial;
+	width: 430px;	
+	padding-bottom: 10px;
+}
+
+.box legend, 
+.box label,
+.box fieldset button {
+	margin-left: 10px;
+}
+

@@ -24,6 +24,8 @@
 			"js/helpers.js",
 			"js/pages/options.js",
 			"js/pages/result.js",
+			"js/pages/js_tab.js",
+			"js/pages/css_tab.js",
 			"js/content.js"
 		],
 	  "css": [
