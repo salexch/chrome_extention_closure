@@ -80,19 +80,22 @@ var ResultPageView = Backbone.View.extend({
 			},
 			success: function(data, textStatus, jqXHR) {
 				var selected_js = Scripts.getSelected();
+				
+				//var replace = [/(\$)/ig, /(\{)/ig, /(\})/ig, /(\()/ig, /(\))/ig, /(\s+)/ig, /(\r)/ig, /(\n)/ig, /(\t)/ig]; //text = text.replace(replace[i], '\\$1');
+				
+				var replace = [/\$/ig, /\{/ig, /\}/ig, /\(/ig, /\)/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig];
+				var replacer = ['\\$', '\\{',  '\\}',  '\\(',  '\\)',  '\\s+',  '\\r',  '\\n',  '\\t'];
+				
 				$.each(selected_js, function() {
 					if (this.get('src_full')) 
 						var regexp = '<script.*' + this.get('src') + '[^<]*<\/script>';
 					else {
-						var replace = [/\$/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig]
-						var replacer = ['\\$', '\\s+', '\\r', '\\n', '\\t'];
-						
-						var regexp = '<script>' + this.get('text');
+						var text = this.get('text');
 						
 						for(var i = 0;i < replace.length ;i++) 
-							regexp = regexp.replace(replace[i], replacer[i]);
+							text = text.replace(replace[i], replacer[i]);
 							
-						regexp += '[^<]*<\/script>';
+						regexp = '<script>' + text + '[^<]*<\/script>';
 					}
 					var pattern =  new RegExp(regexp, 'ig');
 					data = data.replace(pattern, '');
@@ -100,19 +103,19 @@ var ResultPageView = Backbone.View.extend({
 				
 
 				var selected_css = Styles.getSelected();
+				//var replace = [/\$/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig]
+				//var replacer = ['\\$', '\\s+', '\\r', '\\n', '\\t'];
+				
 				$.each(selected_css, function() {
 					if (this.get('src_full')) 
 						var regexp = '<link.*' + this.get('src') + '[^<]*>';
 					else {
-						var replace = [/\$/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig]
-						var replacer = ['\\$', '\\s+', '\\r', '\\n', '\\t'];
-						
-						var regexp = '<style>' + this.get('text');
+						var text = this.get('text');
 						
 						for(var i = 0;i < replace.length ;i++) 
-							regexp = regexp.replace(replace[i], replacer[i]);
+							text = text.replace(replace[i], replacer[i]);
 							
-						regexp += '[^<]*<\/style>';
+						regexp = '<style>' + text + '[^<]*<\/style>';
 					}
 					var pattern =  new RegExp(regexp, 'ig');
 					data = data.replace(pattern, '');
