@@ -28,6 +28,7 @@ var ResultPageView = Backbone.View.extend({
 				'</ul>' +
 				'<ul class="result-nav-content">' +
 					'<li class="res-nav-compiled">' +
+						'{{{js_download}}}'+
 						'<code>{{compiled_code}}</code>' +
 					'</li>' +
 					'<li class="res-nav-warning {{#warnings_number}}yellow{{/warnings_number}}"">' +
@@ -44,6 +45,7 @@ var ResultPageView = Backbone.View.extend({
 					'</li>' +
 					'<li class="res-nav-post"></li>' +
 					'<li class="res-nav-css">'+
+						'{{{css_download}}}'+
 						'<xmp>{{{modified_css}}}</xmp>'+
 					'</li>' +
 					'<li class="res-nav-html">'+
@@ -141,6 +143,12 @@ var ResultPageView = Backbone.View.extend({
 				if (SETTINGS.minify_html)
 					data = data.replace(/(\n|\r|\t)/ig, '');
 				
+				
+				that.$el.find('.res-nav-html').prepend($('<a />', {
+					href: 'data:text/plain,' + encodeURIComponent(data),
+					target: '_blank'
+				}).html('download'));
+				
 				that.$el.find('.res-nav-html xmp').text(data);
 			}
 		});	
@@ -167,10 +175,12 @@ var ResultPageView = Backbone.View.extend({
 			original_size_gz: ('undefined' == typeof data.statistics) ? '' : data.statistics.originalGzipSize,
 			compiled_size: ('undefined' == typeof data.statistics) ? '' : data.statistics.compressedSize,
 			compiled_size_gz: ('undefined' == typeof data.statistics) ? '' : data.statistics.compressedGzipSize,
+			js_download: ('undefined' == typeof data.compiledCode) ? '' : '<a target="blank" href="data:text/plain,' + encodeURIComponent(data.compiledCode) + '">download</a>',
 			compiled_code: ('undefined' == typeof data.compiledCode) ? '' : data.compiledCode,
 			compiled_js_url: ('undefined' == typeof data.outputFilePath) ? false : CLOSURE_URL + data.outputFilePath,
 			compiled_js_name: ('undefined' == typeof data.statistics) ? '' : closure_post_params.output_file_name,
 			
+			css_download: ('undefined' == typeof data.css) ? '' : '<a target="blank" href="data:text/plain,' + encodeURIComponent(data.css) + '">download</a>',
 			modified_css: ('undefined' == typeof data.css) ? '' : data.css
 		}
 		
