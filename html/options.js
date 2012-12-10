@@ -17,6 +17,8 @@
 		
 		try {
 			settings = $.parseJSON(localStorage['closure_compiler']);
+			if (!settings) 
+				settings = $.extend({}, options_data);
 		} catch (e) {
 			settings = $.extend({}, options_data);
 		}
@@ -51,7 +53,7 @@
 
 	
 	settings = restore_options();
-	
+
 	$(function() {
 		drawOptions();
 	});
