@@ -38,7 +38,7 @@ var closure_post_params = {
 	output_format: 'json',
 	output_info: 'compiled_code',
 	warning_level:'DEFAULT',
-	output_file_name: _.uniqueId('compiled_') + Math.floor( ( Math.random()*randomizer ) + 1 )  + '.js'
+	output_file_name: _.uniqueId('compiled_') + Math.floor( ( Math.random()*randoms[randomizer] ) + 1 )  + '.js'
 };
 
 var closure_get_params = ['statistics', 'errors', 'warnings'];
@@ -144,15 +144,14 @@ var ContentView = Backbone.View.extend({
 			
 			if (elem.is(':checked')) {
 				if (key == 'js_inject_inline')
-					SETTINGS.key = (value == 'ije') ? false : true;
+					SETTINGS[key] = (value == 'ije') ? false : true;
 				else
-					SETTINGS.key = true;
+					SETTINGS[key] = true;
 			} else  {
 				if (key != 'js_inject_inline')
-					SETTINGS.key = false;
+					SETTINGS[key] = false;
 			}		
 		}); 		
-		
 	},	
 	
 	addResult: function(data) {
@@ -207,16 +206,16 @@ var getCompile = function() {
 	$.when(Styles.compile(), Scripts.compile()).then(function(css, js) {
 		var data = {};
 		if (js && !css)
-			data = js;
+			data = js[0];
 			
 		if (css && !js) 
 			data.css = css;
 			
 		if (css && js)	{
-			data = js;
+			data = js[0];
 			data.css = css;
 		}	
-	
+
 		openPopup.masterView.addResult(data);
 		openPopup.masterView.showPage('result');	
 		loading_elem.hide();		

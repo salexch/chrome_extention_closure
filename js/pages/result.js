@@ -126,12 +126,12 @@ var ResultPageView = Backbone.View.extend({
 						var js_url = CLOSURE_URL + that.data.outputFilePath;
 						data = data.replace(pat3, '<script src="' + js_url + '"><\/script>\n</body>');
 					} else 
-						data = data.replace(pat3, '<script>' + this.data.compiledCode + '<\/script>\n</body>');
+						data = data.replace(pat3, '<script>' + that.data.compiledCode + '<\/script>\n</body>');
 				}
 
 				if (selected_css.length) {
 					if (SETTINGS.css_inject_inline) {
-						data = data.replace(pat3, '<style>' + this.data.css + '<\/style>\n</body>');
+						data = data.replace(pat3, '<style>' + that.data.css + '<\/style>\n</body>');
 					} 
 				}
 
