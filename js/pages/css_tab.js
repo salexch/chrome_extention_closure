@@ -41,7 +41,7 @@ var StylesCollection = ScriptsCollection.extend({
 			dfd.resolve();
 		
 		$.each(selected, function() {
-			styles_text += YAHOO.compressor.cssmin(this.get('text'));
+			styles_text += YAHOO.compressor.cssmin(this.get('text').replace(/(\.\.\/)+/ig, ''));
 		});
 		
 		_.defer(function() {
