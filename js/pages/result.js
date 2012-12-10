@@ -145,7 +145,7 @@ var ResultPageView = Backbone.View.extend({
 				
 				
 				that.$el.find('.res-nav-html').prepend($('<a />', {
-					href: 'data:text/plain,' + encodeURIComponent(data),
+					href: 'data:text/html,' + encodeURIComponent(data),
 					target: '_blank'
 				}).html('download'));
 				
@@ -175,12 +175,12 @@ var ResultPageView = Backbone.View.extend({
 			original_size_gz: ('undefined' == typeof data.statistics) ? '' : data.statistics.originalGzipSize,
 			compiled_size: ('undefined' == typeof data.statistics) ? '' : data.statistics.compressedSize,
 			compiled_size_gz: ('undefined' == typeof data.statistics) ? '' : data.statistics.compressedGzipSize,
-			js_download: ('undefined' == typeof data.compiledCode) ? '' : '<a target="blank" href="data:text/plain,' + encodeURIComponent(data.compiledCode) + '">download</a>',
+			js_download: ('undefined' == typeof data.compiledCode) ? '' : '<a target="blank" href="data:text/javascript,' + encodeURIComponent(data.compiledCode) + '">download</a>',
 			compiled_code: ('undefined' == typeof data.compiledCode) ? '' : data.compiledCode,
 			compiled_js_url: ('undefined' == typeof data.outputFilePath) ? false : CLOSURE_URL + data.outputFilePath,
 			compiled_js_name: ('undefined' == typeof data.statistics) ? '' : closure_post_params.output_file_name,
 			
-			css_download: ('undefined' == typeof data.css) ? '' : '<a target="blank" href="data:text/plain,' + encodeURIComponent(data.css) + '">download</a>',
+			css_download: ('undefined' == typeof data.css) ? '' : '<a target="blank" href="data:text/css,' + encodeURIComponent(data.css) + '">download</a>',
 			modified_css: ('undefined' == typeof data.css) ? '' : data.css
 		}
 		
