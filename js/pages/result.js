@@ -83,8 +83,8 @@ var ResultPageView = Backbone.View.extend({
 				
 				//var replace = [/(\$)/ig, /(\{)/ig, /(\})/ig, /(\()/ig, /(\))/ig, /(\s+)/ig, /(\r)/ig, /(\n)/ig, /(\t)/ig]; //text = text.replace(replace[i], '\\$1');
 				
-				var replace = [/\$/ig, /\{/ig, /\}/ig, /\(/ig, /\)/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig];
-				var replacer = ['\\$', '\\{',  '\\}',  '\\(',  '\\)',  '\\s+',  '\\r',  '\\n',  '\\t'];
+				var replace = [/\$/ig, /\{/ig, /\}/ig, /\(/ig, /\)/ig, /\./ig, /\+/ig, /\*/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig];
+				var replacer = ['\\$', '\\{',  '\\}',  '\\(',  '\\)',  '\\.',  '\\+',  '\\*',  '\\s+',  '\\r',  '\\n',  '\\t'];
 				
 				$.each(selected_js, function() {
 					if (this.get('src_full')) 
