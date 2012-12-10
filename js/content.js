@@ -183,9 +183,8 @@ $(document).ready(function() {
 var sendMessage = function(msg_obj) {
 	chrome.extension.sendMessage(msg_obj, function(response) {
 		if (response.background && response.settings)	{
-			global_options = response.settings;
+			global_options = (_.size(response.settings)) ? response.settings : options_data;
 		}	
-		//console.log(response);
 	});
 }
 

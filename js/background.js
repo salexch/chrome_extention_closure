@@ -44,7 +44,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request && request.getSettings)	{
 		sendResponse({
 			background: true,
-			settings: JSON.parse(localStorage['closure_compiler'])
+			settings: JSON.parse(localStorage['closure_compiler'] || '{}') 
 		});
 	}
 });
