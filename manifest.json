@@ -23,6 +23,7 @@
 			"js/modules/underscore-min.js",
 			"js/modules/backbone.js",
 			"js/modules/jquery-ui-1.9.2.custom.min.js",
+			"js/modules/cssmin.js",
 			"js/helpers.js",
 			"js/pages/options.js",
 			"js/pages/result.js",

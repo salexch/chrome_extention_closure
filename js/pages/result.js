@@ -103,8 +103,6 @@ var ResultPageView = Backbone.View.extend({
 				
 
 				var selected_css = Styles.getSelected();
-				//var replace = [/\$/ig, /\s+/ig, /\r/ig, /\n/ig, /\t/ig]
-				//var replacer = ['\\$', '\\s+', '\\r', '\\n', '\\t'];
 				
 				$.each(selected_css, function() {
 					if (this.get('src_full')) 

@@ -30,6 +30,7 @@ var StylesCollection = ScriptsCollection.extend({
 
 		});	
 	},
+	
 	compile: function() {
 		var dfd = $.Deferred();
 		
@@ -40,12 +41,7 @@ var StylesCollection = ScriptsCollection.extend({
 			dfd.resolve();
 		
 		$.each(selected, function() {
-			styles_text += '' + this.get('text').replace(/;\s+/ig, ';')
-												.replace(/}\s+/ig, '}')
-												.replace(/{\s+/ig, '{')
-												//from http://upshots.org/javascript/javascript-regexp-to-remove-comments
-												.replace(/(\/\*([\s\S]*?)\*\/)|(\/\/(.*)$)/gm, '') 
-												.replace(/\t/ig, '');
+			styles_text += YAHOO.compressor.cssmin(this.get('text'));
 		});
 		
 		_.defer(function() {

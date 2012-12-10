@@ -231,7 +231,7 @@ var openPopup = function() {
 		container.dialog({
 			minWidth: 720,
 			maxHeight: 800,
-			title: TITLE + ' <a class="poweredby" href="' + CLOSURE_URL + '" target="_blank">powered by Google Closure</a>',
+			title: TITLE + '<span class="poweredby"> powered by <a href="' + CLOSURE_URL + '" target="_blank">Google Closure</a> & <a target="_blank" href="https://github.com/yui/yuicompressor">yuicompressor</a></span>',
 			modal: true,
 			create: function( event, ui ) {
 				openPopup.masterView = new ContentView({
