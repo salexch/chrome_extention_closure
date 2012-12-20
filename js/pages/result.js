@@ -141,7 +141,7 @@ var ResultPageView = Backbone.View.extend({
 
 				
 				if (SETTINGS.minify_html)
-					data = data.replace(/(\n|\r|\t)/ig, '');
+					data = data.replace(/(\n|\r|\t)/ig, '').replace(/\s{2,}/ig, ' ');
 				
 				
 				that.$el.find('.res-nav-html').prepend($('<a />', {
