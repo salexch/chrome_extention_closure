@@ -56,7 +56,7 @@ var StylesCollection = ScriptsCollection.extend({
 			if (SETTINGS.image_convert)	 {
 				console.groupCollapsed(that.get('src')); 
 				
-				styles_text += compressed.replace(/(\()([^)]{0,}(png|jpg|jpeg|PNG|JPG|JPEG))(\))/ig, function() {
+				styles_text += compressed.replace(/(\()([^)]+(png|jpg|jpeg|PNG|JPG|JPEG))(\))/ig, function() {
 					var id = _.uniqueId('DataUriPlaceholder_');
 					var css_url = that.get('src_full').replace(/([^\/]+$)/ig, ''); //removes filename
 					var img_url = css_url + arguments[2];
@@ -67,7 +67,7 @@ var StylesCollection = ScriptsCollection.extend({
 					imgs_ids.push(id);
 					
 					return '(' + id + ')';
-				});
+				}).replace(/\.+\//gi, '');
 				
 				console.groupEnd();
 			} else {
