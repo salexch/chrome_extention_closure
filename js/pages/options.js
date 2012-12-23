@@ -80,6 +80,12 @@ var css_injection_options = [{
 	label: 'Inject Css inline',
 }];
 
+var image_convert_options = [{
+	type: 'checkbox',
+	name: 'image_convert',
+	value: 'ic',
+	label: 'Convert Images to base64',
+}];
 
 var options_data = {
 	OptionsCategories: [{
@@ -107,6 +113,9 @@ var options_data = {
 		},{
 			title: 'Css Injection',
 			list: css_injection_options
+		},{
+			title: 'Images',
+			list: image_convert_options 
 		}]
 	}]
 };
