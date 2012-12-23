@@ -56,7 +56,7 @@ var StylesCollection = ScriptsCollection.extend({
 			if (SETTINGS.image_convert)	 {
 				console.groupCollapsed(that.get('src')); 
 				
-				compressed = compressed.replace(/(\()([^)]+(png|jpg|jpeg|PNG|JPG|JPEG))(\))/ig, function() {
+				compressed = compressed.replace(/(url\s*\()([^)]+(png|jpg|jpeg|PNG|JPG|JPEG))(\))/ig, function() {
 					var id = _.uniqueId('DataUriPlaceholder_');
 					var css_url = that.get('src_full').replace(/([^\/]+$)/ig, ''); //removes filename
 					var img_url = css_url + arguments[2];
@@ -66,7 +66,7 @@ var StylesCollection = ScriptsCollection.extend({
 					imgs_srcs.push(img_url);
 					imgs_ids.push(id);
 					
-					return '(' + id + ')';
+					return 'url(' + id + ')';
 				});
 				
 				console.groupEnd();
